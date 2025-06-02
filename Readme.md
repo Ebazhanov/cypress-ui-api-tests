@@ -6,7 +6,7 @@ GoodBudget web app testing using [Cypress](https://www.cypress.io/)🧪
 
 ## ✨ Features
 ### 🔍 Manual "Exploratory" testing
-- 🧪 [Exploratory testing charters](exp-testing-charters.md)
+- 🧪 [Exploratory testing charters]()
 
 ### 🤖 E2E Automation:
 - 💻 [UI tests](/cypress/e2e/ui)

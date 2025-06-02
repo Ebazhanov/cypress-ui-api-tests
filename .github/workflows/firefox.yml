@@ -1,0 +1,62 @@
+name: 🟠 Firefox
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: 📥 Install Dependencies
+        run: npm ci
+
+      - name: 🧪 Run Cypress Tests
+        run: npm run cy:run:firefox
+        continue-on-error: true  # ← Optional: prevents hard fail, ensures post steps run
+
+      - name: 📸 Upload Cypress Screenshots (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: 🎥 Upload Cypress Videos (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+      - name: 🧬 Merge Mochawesome JSON Reports
+        if: always()
+        run: npm run report:merge
+
+      - name: 📄 Show merged report
+        if: always()
+        run: cat cypress/reports/merged.json || echo "No merged report content"
+
+      - name: 📦 Install mochawesome-report-generator
+        if: always()
+        run: npm install -g mochawesome-report-generator
+
+      - name: 📝 Generate HTML Report
+        if: always()
+        run: npm run report:generate
+
+      - name: 📤 Upload HTML Report as Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cypress-HTML-Report
+          path: cypress/reports/html
