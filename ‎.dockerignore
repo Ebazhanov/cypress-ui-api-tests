@@ -1,0 +1,8 @@
+node_modulesAdd
+.git
+dist
+.DS_Store
+node_modules
+cypress/videos
+cypress/screenshots
+cypress/reports

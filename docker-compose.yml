@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  cypress-chromium:
+    build: .
+    volumes:
+      - .:/e2e
+      - /e2e/node_modules
+    working_dir: /e2e
+
+  cypress-firefox:
+    build: .
+    volumes:
+      - .:/e2e
+      - /e2e/node_modules
+    working_dir: /e2e
